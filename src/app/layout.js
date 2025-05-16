@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/layout/Navbar";
+import { Toaster } from "react-hot-toast";
+import { FormProvider } from "./context/form-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,12 +20,20 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const navbarOptions = [
+    { name: "About", linkHref: "about" },
+    { name: "Pricing", linkHref: "pricing" },
+  ];
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-amber-300`}
       >
-        {children}
+        <FormProvider>
+          <Toaster position="bottom-right" reverseOrder={false} />
+          <Navbar brandName="Company" menuOptions={navbarOptions} />
+          {children}
+        </FormProvider>
       </body>
     </html>
   );
