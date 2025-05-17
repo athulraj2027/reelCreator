@@ -2,10 +2,27 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import AuthServices from "@/app/services/authServices";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useAuth } from "@/app/context/auth-context";
 
-const Navbar = ({ brandName, menuOptions }) => {
+const Navbar = ({ brandName, menuOptions, loginOptions }) => {
+  const router = useRouter();
   const [isMobileMenu, setIsMobileMenu] = useState(false); //  state for screen width
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); //   state for mobile menu open
+  const { isLoggedIn, logout, checkLogin } = useAuth();
+
+  const logoutHandler = async () => {
+    try {
+      await axios.post("/api/logout");
+      logout();
+      router.replace("/");
+      return;
+    } catch (error) {
+      console.log("error in logging out : ", error);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -14,12 +31,13 @@ const Navbar = ({ brandName, menuOptions }) => {
 
     handleResize(); // Set on mount
     window.addEventListener("resize", handleResize); // Update on resize
-
+    checkLogin();
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [checkLogin]);
 
   return (
-    <div className="w-full h-20 flex text-white bg-amber-400 justify-between p-7 opacity-80 fixed items-center shadow-xl">
+   <div className="w-full h-20 flex text-white bg-amber-400 justify-between p-7 opacity-80 fixed items-center shadow-xl">
+
       <h1 className="text-2xl text-gray-500 font-bold">{brandName}</h1>
 
       {isMobileMenu && (
@@ -89,7 +107,25 @@ const Navbar = ({ brandName, menuOptions }) => {
                       </Link>
                     </li>
                   ))}
-                  <li> </li>
+
+                  {isLoggedIn && (
+                    <>
+                      {loginOptions.map((item, index) => (
+                        <li key={index}>
+                          <Link
+                            href={`/${item.linkHref}`}
+                            className="hover:underline"
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+
+                      <li>
+                        <Button onClick={logoutHandler}>Logout</Button>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </div>
             </>
@@ -108,7 +144,21 @@ const Navbar = ({ brandName, menuOptions }) => {
               </li>
             ))}
 
-            <li> </li>
+            {isLoggedIn && (
+              <>
+                {loginOptions.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      href={`/${item.linkHref}`}
+                      className="hover:underline"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+                <Button onClick={logoutHandler}>Logout</Button>
+              </>
+            )}
           </ul>
         </div>
       )}

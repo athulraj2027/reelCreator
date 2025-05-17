@@ -7,12 +7,14 @@ import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useForm } from "@/app/context/form-context";
+import { useAuth } from "@/app/context/auth-context";
 
 const SigninForm = () => {
   const router = useRouter();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const { showSignup } = useForm();
+  const {login} = useAuth()
 
   const validateForm = () => {
     if (!email || !password) {
@@ -41,6 +43,7 @@ const SigninForm = () => {
       if (response.status === 200) {
         toast.success("User logged in successfully", { id: toastId });
         // setIsLoggedIn(true);
+        login()
         router.replace("/dashboard");
       } else {
         toast.error(response.data.message, { id: toastId });

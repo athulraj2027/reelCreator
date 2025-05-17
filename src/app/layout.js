@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import { Toaster } from "react-hot-toast";
 import { FormProvider } from "./context/form-context";
+import { AuthProvider } from "./context/auth-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,16 +25,23 @@ export default function RootLayout({ children }) {
     { name: "About", linkHref: "about" },
     { name: "Pricing", linkHref: "pricing" },
   ];
+  const loginOptions = [{ name: "Profile", linkHref: "profile" }];
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-amber-300`}
       >
-        <FormProvider>
-          <Toaster position="bottom-right" reverseOrder={false} />
-          <Navbar brandName="Company" menuOptions={navbarOptions} />
-          {children}
-        </FormProvider>
+        <AuthProvider>
+          <FormProvider>
+            <Toaster position="bottom-right" reverseOrder={false} />
+            <Navbar
+              brandName="Company"
+              menuOptions={navbarOptions}
+              loginOptions={loginOptions}
+            />
+            <div className="p-20"> {children}</div>
+          </FormProvider>
+        </AuthProvider>
       </body>
     </html>
   );
