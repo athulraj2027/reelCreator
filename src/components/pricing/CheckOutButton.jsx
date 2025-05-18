@@ -1,8 +1,11 @@
 "use client";
 
+import { useAuth } from "@/app/context/auth-context";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const CheckoutButton = ({ price, title }) => {
+  const { isLoggedIn } = useAuth();
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -52,8 +55,12 @@ const CheckoutButton = ({ price, title }) => {
 
   return (
     <button
-      className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-      onClick={handleCheckout}
+      className="px-4 py-2 bg-white text-green-300 rounded hover:bg-green-400 hover:text-white"
+      onClick={
+        isLoggedIn
+          ? handleCheckout
+          : () => toast.error("Please sign in to upgrade")
+      }
     >
       Upgrade
     </button>

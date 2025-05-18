@@ -14,7 +14,7 @@ const SigninForm = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const { showSignup } = useForm();
-  const {login} = useAuth()
+  const { login } = useAuth();
 
   const validateForm = () => {
     if (!email || !password) {
@@ -43,8 +43,8 @@ const SigninForm = () => {
       if (response.status === 200) {
         toast.success("User logged in successfully", { id: toastId });
         // setIsLoggedIn(true);
-        login()
-        router.replace("/dashboard");
+        login();
+        router.replace(`/dashboard/${response.data.id}`);
       } else {
         toast.error(response.data.message, { id: toastId });
       }

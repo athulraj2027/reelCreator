@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import AuthServices from "@/app/services/authServices";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuth } from "@/app/context/auth-context";
@@ -36,10 +35,10 @@ const Navbar = ({ brandName, menuOptions, loginOptions }) => {
   }, [checkLogin]);
 
   return (
-   <div className="w-full h-20 flex text-white bg-amber-400 justify-between p-7 opacity-80 fixed items-center shadow-xl">
-
-      <h1 className="text-2xl text-gray-500 font-bold">{brandName}</h1>
-
+    <div className="w-full h-20 flex  text-gray-400 justify-around p-7 opacity-90 fixed shadow-xl items-center ">
+      <Link href="/">
+        <h1 className="text-2xl text-gray-500 font-bold">{brandName}</h1>
+      </Link>
       {isMobileMenu && (
         <>
           {!isMobileMenuOpen ? (
@@ -86,7 +85,7 @@ const Navbar = ({ brandName, menuOptions, loginOptions }) => {
 
               <div
                 className={`
-          absolute top-full right-0 w-[50%] bg-amber-400 h-[100vh] p-5 shadow-2xl  text-right z-10
+          absolute top-full right-0 w-[50%]  h-[100vh] p-5 shadow-2xl  text-right z-10
           transform transition-all duration-300 ease-in-out origin-top-right
           ${
             isMobileMenuOpen
@@ -96,20 +95,9 @@ const Navbar = ({ brandName, menuOptions, loginOptions }) => {
         `}
               >
                 {" "}
-                <ul className="flex flex-col gap-5 p-3">
-                  {menuOptions.map((item, index) => (
-                    <li key={index}>
-                      <Link
-                        href={`/${item.linkHref}`}
-                        className="hover:underline"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-
-                  {isLoggedIn && (
-                    <>
+                {isLoggedIn ? (
+                  <>
+                    <ul className="flex flex-col gap-5 p-3">
                       {loginOptions.map((item, index) => (
                         <li key={index}>
                           <Link
@@ -124,9 +112,22 @@ const Navbar = ({ brandName, menuOptions, loginOptions }) => {
                       <li>
                         <Button onClick={logoutHandler}>Logout</Button>
                       </li>
-                    </>
-                  )}
-                </ul>
+                    </ul>
+                  </>
+                ) : (
+                  <ul className="flex flex-col gap-5 p-3">
+                    {menuOptions.map((item, index) => (
+                      <li key={index}>
+                        <Link
+                          href={`/${item.linkHref}`}
+                          className="hover:underline"
+                        >
+                          {item.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </>
           )}
@@ -135,17 +136,9 @@ const Navbar = ({ brandName, menuOptions, loginOptions }) => {
 
       {!isMobileMenu && (
         <div>
-          <ul className="flex justify-around gap-5 items-center">
-            {menuOptions.map((item, index) => (
-              <li key={index}>
-                <Link href={`/${item.linkHref}`} className="hover:underline">
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-
-            {isLoggedIn && (
-              <>
+          {isLoggedIn ? (
+            <>
+              <ul className="flex justify-around gap-5 items-center">
                 {loginOptions.map((item, index) => (
                   <li key={index}>
                     <Link
@@ -157,9 +150,19 @@ const Navbar = ({ brandName, menuOptions, loginOptions }) => {
                   </li>
                 ))}
                 <Button onClick={logoutHandler}>Logout</Button>
-              </>
-            )}
-          </ul>
+              </ul>
+            </>
+          ) : (
+            <ul className="flex justify-around gap-5 items-center">
+              {menuOptions.map((item, index) => (
+                <li key={index}>
+                  <Link href={`/${item.linkHref}`} className="hover:underline">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
     </div>

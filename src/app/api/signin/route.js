@@ -1,4 +1,3 @@
-
 import User from "@/app/_lib/models/User";
 import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
@@ -27,6 +26,7 @@ export async function POST(req) {
     const tokenData = {
       id: user._id,
       email: user.email,
+      plan: user.plan,
     };
     const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
       expiresIn: "7d",
@@ -36,6 +36,7 @@ export async function POST(req) {
     }
     const response = NextResponse.json({
       message: "User logged in successfully",
+      id: user._id,
     });
 
     response.cookies.set("token", token, {

@@ -17,7 +17,7 @@ const CardWrapper = ({
   children,
 }) => {
   return (
-    <Card className="bg-amber-300 shadow-2xl text-white  w-[300px] sm:w-[500px] mt-10">
+    <Card className="bg-green-300 shadow-2xl text-white  w-[300px] sm:w-[500px] mt-10">
       <CardHeader>
         <CardTitle className="text-4xl">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
