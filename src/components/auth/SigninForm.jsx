@@ -44,7 +44,7 @@ const SigninForm = () => {
         toast.success("User logged in successfully", { id: toastId });
         // setIsLoggedIn(true);
         login();
-        router.replace(`/dashboard/${response.data.id}`);
+        router.replace(`/dashboard`);
       } else {
         toast.error(response.data.message, { id: toastId });
       }

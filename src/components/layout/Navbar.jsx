@@ -35,7 +35,7 @@ const Navbar = ({ brandName, menuOptions, loginOptions }) => {
   }, [checkLogin]);
 
   return (
-    <div className="w-full h-20 flex  text-gray-400 justify-around p-7 opacity-90 fixed shadow-xl items-center ">
+    <div className="w-full h-20 flex  text-gray-400 justify-around p-7 opacity-90 backdrop-blur-sm fixed shadow-xl items-center ">
       <Link href="/">
         <h1 className="text-2xl text-gray-500 font-bold">{brandName}</h1>
       </Link>
@@ -86,7 +86,7 @@ const Navbar = ({ brandName, menuOptions, loginOptions }) => {
               <div
                 className={`
           absolute top-full right-0 w-[50%]  h-[100vh] p-5 shadow-2xl  text-right z-10
-          transform transition-all duration-300 ease-in-out origin-top-right
+          transform transition-all duration-300 ease-in-out origin-top-right backdrop-blur-sm
           ${
             isMobileMenuOpen
               ? "opacity-100 translate-y-0 pointer-events-auto"

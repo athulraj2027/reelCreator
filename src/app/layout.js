@@ -23,8 +23,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   const bgcolor = "black";
   const navbarOptions = [
-    { name: "About", linkHref: "about" },
-    { name: "Pricing", linkHref: "pricing" },
+    // { name: "About", linkHref: "about" },
+    // { name: "Pricing", linkHref: "pricing" },
   ];
   const loginOptions = [
     // { name: "Dashboard", linkHref: "dashboard" },
@@ -34,13 +34,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${roboto.className} antialiased bg-[radial-gradient(circle,_rgba(134,239,172,0.5)_0%,_rgba(134,239,172,0)_70%)] bg-black`}
+        className={`${roboto.className} antialiased bg-[radial-gradient(circle,rgba(31,41,55,0.5)_0%,rgba(31,41,55,0)_70%)] bg-black`}
       >
         <AuthProvider>
           <FormProvider>
             <Toaster position="bottom-right" reverseOrder={false} />
             <Navbar
-              brandName="Company"
+              brandName="REELify"
               menuOptions={navbarOptions}
               loginOptions={loginOptions}
               

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Home() {
   
-  const text = "Your solution to everything";
+  const text = "Create Reels in one second";
   return (
     <main className="flex justify-center items-center min-h-screen w-full overflow-x-hidden ">
       <div className="container mx-auto ">
